@@ -1,12 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Menù HTML Template</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>無名早餐店 - 花蓮傳統手工早餐 | Hualien Breakfast Restaurant</title>
+    <meta name="description" content="花蓮正宗傳統早餐店。自1998年起提供手工燒餅、蛋餅、豆漿等美味早餐。位於花蓮市德安一街59號。Authentic Hualien breakfast since 1998 - handmade flatbreads, pancakes, and soy milk.">
+    <meta name="keywords" content="花蓮早餐, 燒餅, 油條, 豆漿, 蛋餅, 小籠包, Hualien breakfast, traditional Taiwanese breakfast, shaobing, youtiao">
+    <meta name="author" content="無名早餐店">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="restaurant">
+    <meta property="og:url" content="https://wuminghualien.com/">
+    <meta property="og:title" content="無名早餐店 - 花蓮傳統手工早餐">
+    <meta property="og:description" content="花蓮正宗傳統早餐店。自1998年起提供手工燒餅、蛋餅、豆漿等美味早餐。">
+    <meta property="og:image" content="https://wuminghualien.com/img/logo2.png">
+    <meta property="og:locale" content="zh_TW">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://wuminghualien.com/">
+    <meta name="twitter:title" content="無名早餐店 - 花蓮傳統手工早餐">
+    <meta name="twitter:description" content="花蓮正宗傳統早餐店。自1998年起提供手工燒餅、蛋餅、豆漿等美味早餐。">
+    <meta name="twitter:image" content="https://wuminghualien.com/img/logo2.png">
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="TW-HUA">
+    <meta name="geo.placename" content="Hualien City">
+    <meta name="geo.position" content="24.0069;121.6066">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/logo2.png">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "無名早餐店",
+        "image": "https://wuminghualien.com/img/logo2.png",
+        "description": "花蓮正宗傳統早餐店。自1998年起提供手工燒餅、蛋餅、豆漿等美味早餐。",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "德安一街59號",
+            "addressLocality": "花蓮市",
+            "addressRegion": "花蓮縣",
+            "addressCountry": "TW"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "24.0069",
+            "longitude": "121.6066"
+        },
+        "telephone": "+886-3-8335408",
+        "servesCuisine": "Taiwanese Breakfast",
+        "priceRange": "NT$15-NT$66",
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "05:30",
+                "closes": "10:30"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Saturday", "Sunday"],
+                "opens": "05:30",
+                "closes": "11:00"
+            }
+        ],
+        "foundingDate": "1998",
+        "menu": "https://wuminghualien.com/"
+    }
+    </script>
 </head>
 <body>
     <div class="sidebar">
