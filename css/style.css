@@ -457,5 +457,7 @@ main h2 {
 }
 
 /* Language visibility */
-body.lang-zh .en { display: none; }
-body.lang-en .zh { display: none; }
+body.lang-zh .en, body.lang-zh .ko, body.lang-zh .ja { display: none; }
+body.lang-en .zh, body.lang-en .ko, body.lang-en .ja { display: none; }
+body.lang-ko .zh, body.lang-ko .en, body.lang-ko .ja { display: none; }
+body.lang-ja .zh, body.lang-ja .en, body.lang-ja .ko { display: none; }
