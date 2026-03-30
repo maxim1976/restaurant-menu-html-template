@@ -456,8 +456,8 @@ main h2 {
     box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
 }
 
-/* Language visibility — ko/ja fall back to English content */
+/* Language visibility */
 body.lang-zh .en, body.lang-zh .ko, body.lang-zh .ja { display: none; }
 body.lang-en .zh, body.lang-en .ko, body.lang-en .ja { display: none; }
-body.lang-ko .zh, body.lang-ko .ja { display: none; }
-body.lang-ja .zh, body.lang-ja .ko { display: none; }
+body.lang-ko .zh, body.lang-ko .en, body.lang-ko .ja { display: none; }
+body.lang-ja .zh, body.lang-ja .en, body.lang-ja .ko { display: none; }
