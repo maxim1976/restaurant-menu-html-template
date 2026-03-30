@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,500');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&display=swap');
+
+:root {
+    --gold: #c9a227;
+    --gold-light: #d4af37;
+    --gold-muted: rgba(201, 162, 39, 0.22);
+    --bg: #fdfaf5;
+    --bg-warm: #f9f5ec;
+    --text: #1a1a18;
+    --text-muted: #5a5549;
+    --sidebar-overlay: rgba(10, 8, 4, 0.56);
+}
 
 * {
     -webkit-box-sizing: border-box;
@@ -8,45 +23,60 @@
 html {
     height: 100%;
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Work Sans', sans-serif;
     font-weight: 400;
-    color: #000;
+    color: var(--text);
     height: 100%;
     font-size: 0.940rem;
     line-height: 1.65;
-    background-color: #ffffff;
+    background-color: var(--bg);
     word-wrap: break-word;
-    margin: 0; /* reset */
+    margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Subtle grain overlay for depth */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.028;
+    mix-blend-mode: multiply;
+}
+
 h1, h2, h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
     text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
 h1 {
     font-size: 2rem;
-    font-weight: 200;
-    margin: 0;  
+    font-weight: 300;
+    margin: 0;
 }
 
 h2 {
     font-size: 1.75rem;
-    font-weight: 200;
+    font-weight: 300;
     margin-bottom: 0;
 }
 
 h3 {
-    font-size: 1.5rem;
-    font-weight: 200;
+    font-size: 1.4rem;
+    font-weight: 300;
     margin-top: 0;
 }
 
-/* Sidebar */
+/* ─── Sidebar ─────────────────────────────────────────── */
 
 .sidebar {
     position: fixed;
@@ -70,22 +100,38 @@ h3 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--sidebar-overlay);
     z-index: 0;
 }
 
+/* Warm vignette at bottom of sidebar */
+.sidebar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, rgba(0,0,0,0.35), transparent);
+    z-index: 0;
+    pointer-events: none;
+}
+
 .sidebar-inner {
-    padding: 10% 30px 30px;
+    padding: 10% 30px 40px;
     position: relative;
     z-index: 1;
 }
 
 header .logo {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
 }
 
 header h1 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
+    letter-spacing: 0.12em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
 header .social {
@@ -98,14 +144,19 @@ header .social .icon {
 }
 
 header h2 {
-    font-size: 1.438rem;
-    margin-top: 1.4em;
-    margin-bottom: 0.2em;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    margin-top: 1.6em;
+    margin-bottom: 0.25em;
+    color: var(--gold-light);
 }
 
 header p {
-    margin-top: 1.4em;
+    margin-top: 1em;
     margin-bottom: 1em;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
 }
 
 header .location p,
@@ -113,38 +164,83 @@ header .hours p {
     margin-top: 0;
 }
 
+/* Thin gold rule below sidebar section labels */
+header h2::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold-light);
+    margin: 6px auto 0;
+    opacity: 0.6;
+}
+
 header .contacts {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 0.5em;
 }
 
 header .contacts a {
     display: flex;
-    color: #ede9dc;
+    color: rgba(255,255,255,0.8);
     text-decoration: none;
     align-items: center;
     margin: 5px 15px;
+    font-size: 0.85rem;
 }
 
 header .contacts svg {
-    margin-right: 2px;
+    margin-right: 5px;
 }
 
 header .contacts a:hover {
     text-decoration: underline;
 }
 
-/* Menù */
+/* ─── Language-specific fonts ─────────────────────────── */
+
+.zh {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.15em;
+}
+
+.ko {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05em;
+}
+
+.ja {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.05em;
+}
+
+/* ─── Main Menu ───────────────────────────────────────── */
 
 main {
     display: block;
     margin-left: 33%;
-    padding: 6%;
+    padding: 6% 7%;
+    background-color: var(--bg);
+    min-height: 100vh;
+}
+
+/* Warm inset shadow on left edge (where sidebar meets main) */
+main::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 33%;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.07), transparent);
+    pointer-events: none;
+    z-index: 10;
 }
 
 main h1 {
-    margin: 0 0 10px;
+    margin: 0 0 6px;
 }
 
 main h2 {
@@ -153,13 +249,48 @@ main h2 {
 
 main h3 {
     margin-bottom: 0.5em;
+    color: var(--text-muted);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0.03em;
+}
+
+/* Decorative rule below main menu title */
+.menu-title-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 48px;
+}
+
+.menu-title-rule::before,
+.menu-title-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-muted), transparent);
+}
+
+.menu-title-rule .ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.2em;
 }
 
 main .section {
     display: flex;
-    margin-bottom: 60px;
+    margin-bottom: 56px;
     justify-content: space-between;
-    flex-grow: 1;   
+    flex-grow: 1;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+}
+
+main .section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
 }
 
 main .text {
@@ -168,7 +299,7 @@ main .text {
 }
 
 main .text h3:nth-of-type(2) {
-    margin-top: 01.438rem;
+    margin-top: 1.438rem;
 }
 
 main .plate {
@@ -178,16 +309,30 @@ main .plate {
 
 main .plate p:first-child {
     text-transform: uppercase;
+    flex: 1;
 }
 
 main .plate p {
-    margin: 0;  
+    margin: 0;
+}
+
+/* Price styling — gold, serif, right-aligned */
+main .plate p:last-child {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05em;
+    font-weight: 600;
+    min-width: 80px;
+    text-align: right;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 main .dots {
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid var(--gold-muted);
     flex: 1;
-    margin: 0 10px 0 10px;
+    margin: 0 10px;
+    min-width: 20px;
 }
 
 main .description {
@@ -195,24 +340,27 @@ main .description {
 }
 
 main .img {
-    width: 30%;
+    width: 28%;
     height: auto;
-    margin-left: 6%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 2%;
+    margin-left: 5%;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 4px 16px, rgba(0, 0, 0, 0.08) 0px 1px 4px;
+    border-radius: 3px;
+    /* Inset border frame effect */
+    outline: 1px solid rgba(212, 175, 55, 0.2);
+    outline-offset: -6px;
 }
 
 main .left {
     order: -1;
     margin-left: 0;
-    margin-right: 6%;
+    margin-right: 5%;
 }
 
-/* Tablet */
+/* ─── Tablet ───────────────────────────────────────────── */
 
 @media (min-width: 481px) and (max-width: 1024px) {
     .sidebar-inner {
-        padding: 50% 30px;
+        padding: 50% 30px 40px;
     }
 
     header h1 {
@@ -232,6 +380,7 @@ main .left {
         width: 100%;
         height: 15em;
         margin-left: 0;
+        margin-top: 20px;
     }
 
     main .left {
@@ -240,7 +389,7 @@ main .left {
     }
 }
 
-/* Phone */
+/* ─── Phone ────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
     .sidebar {
@@ -256,6 +405,11 @@ main .left {
     main {
         margin-left: 0;
         width: 100%;
+        padding: 8% 6%;
+    }
+
+    main::before {
+        display: none;
     }
 
     main .section {
@@ -267,8 +421,201 @@ main .left {
     main .img {
         display: none;
     }
-    
+
     main .text {
         width: 100%;
     }
+
+    .menu-title-rule {
+        margin-bottom: 32px;
+    }
 }
+
+/* ─── Animations ───────────────────────────────────────── */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+}
+
+@keyframes ornamentFade {
+    from { opacity: 0; transform: scaleX(0.4); }
+    to   { opacity: 1; transform: scaleX(1); }
+}
+
+/* Logo float */
+header .logo {
+    animation: floatLogo 5s ease-in-out infinite;
+}
+
+/* Section reveal on scroll */
+main .section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+main .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Main heading reveal */
+main > h1,
+.menu-title-rule {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.menu-title-rule {
+    animation-delay: 0.15s;
+}
+
+/* Staggered plate items */
+main .section.visible .plate {
+    opacity: 0;
+    animation: fadeInUp 0.45s ease forwards;
+}
+
+main .section.visible .plate:nth-child(1)  { animation-delay: 0.04s; }
+main .section.visible .plate:nth-child(2)  { animation-delay: 0.09s; }
+main .section.visible .plate:nth-child(3)  { animation-delay: 0.14s; }
+main .section.visible .plate:nth-child(4)  { animation-delay: 0.19s; }
+main .section.visible .plate:nth-child(5)  { animation-delay: 0.24s; }
+main .section.visible .plate:nth-child(6)  { animation-delay: 0.29s; }
+main .section.visible .plate:nth-child(7)  { animation-delay: 0.34s; }
+main .section.visible .plate:nth-child(8)  { animation-delay: 0.39s; }
+main .section.visible .plate:nth-child(9)  { animation-delay: 0.44s; }
+main .section.visible .plate:nth-child(10) { animation-delay: 0.49s; }
+
+/* Plate hover effect */
+main .plate {
+    padding: 7px 8px;
+    border-radius: 5px;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    cursor: default;
+}
+
+main .plate:hover {
+    background-color: #fdf5e0;
+    transform: translateX(5px);
+    box-shadow: -3px 0 0 0 var(--gold);
+}
+
+/* Image hover zoom */
+main .img {
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+main .img:hover {
+    transform: scale(1.025);
+    box-shadow: rgba(0, 0, 0, 0.28) 0px 10px 24px;
+}
+
+/* Social icon hover */
+header .social .icon {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+header .social .icon:hover {
+    transform: scale(1.25) rotate(-5deg);
+}
+
+/* Contact link hover */
+header .contacts a {
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+header .contacts a:hover {
+    color: var(--gold-light);
+    transform: translateX(4px);
+}
+
+/* Section heading — gold shimmer on Latin, solid gold on CJK */
+main h2 {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--text) 35%, var(--gold-light) 50%, var(--text) 65%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+}
+
+/* Sidebar content stagger */
+.sidebar-inner > header > * {
+    opacity: 0;
+    animation: fadeInUp 0.55s ease forwards;
+}
+
+.sidebar-inner > header > *:nth-child(1)  { animation-delay: 0.08s; }
+.sidebar-inner > header > *:nth-child(2)  { animation-delay: 0.18s; }
+.sidebar-inner > header > *:nth-child(3)  { animation-delay: 0.28s; }
+.sidebar-inner > header > *:nth-child(4)  { animation-delay: 0.38s; }
+.sidebar-inner > header > *:nth-child(5)  { animation-delay: 0.48s; }
+.sidebar-inner > header > *:nth-child(6)  { animation-delay: 0.58s; }
+.sidebar-inner > header > *:nth-child(7)  { animation-delay: 0.68s; }
+.sidebar-inner > header > *:nth-child(8)  { animation-delay: 0.78s; }
+.sidebar-inner > header > *:nth-child(9)  { animation-delay: 0.88s; }
+.sidebar-inner > header > *:nth-child(10) { animation-delay: 0.98s; }
+
+/* ─── Language switcher ────────────────────────────────── */
+
+.lang-switch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px;
+    margin: 15px auto 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 4px;
+    width: fit-content;
+    max-width: 240px;
+}
+
+.lang-btn {
+    padding: 5px 11px;
+    border: none;
+    border-radius: 24px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+}
+
+.lang-btn:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+}
+
+.lang-btn.active {
+    background: var(--gold);
+    color: #1a1a18;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(201, 162, 39, 0.45);
+}
+
+/* ─── Language visibility ──────────────────────────────── */
+
+body.lang-zh .en, body.lang-zh .ko, body.lang-zh .ja { display: none; }
+body.lang-en .zh, body.lang-en .ko, body.lang-en .ja { display: none; }
+body.lang-ko .zh, body.lang-ko .en, body.lang-ko .ja { display: none; }
+body.lang-ja .zh, body.lang-ja .en, body.lang-ja .ko { display: none; }
