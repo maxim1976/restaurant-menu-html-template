@@ -579,16 +579,38 @@ body.cart-visible main {
 }
 
 .cashier-header {
+    display: flex;
+    align-items: center;
     margin-bottom: 32px;
     padding-bottom: 18px;
     border-bottom: 2px solid #d4af37;
-    text-align: center;
 }
 
 .cashier-header span {
     font-family: 'Ma Shan Zheng', cursive;
     font-size: 2rem;
     color: #d4af37;
+    flex: 1;
+    text-align: center;
+}
+
+.cashier-edit-btn {
+    background: transparent;
+    border: 1.5px solid #444;
+    color: #aaa;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.cashier-edit-btn:hover {
+    border-color: #888;
+    color: #fff;
 }
 
 /* Close button hidden — triple-tap exits instead */

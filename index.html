@@ -387,7 +387,8 @@
             items: { zh: '項',              en: 'items',             ko: '개',                    ja: '品' },
             title: { zh: '點餐單',          en: 'Order',             ko: '주문서',                ja: 'ご注文' },
             total: { zh: '合計',            en: 'Total',             ko: '합계',                  ja: '合計' },
-            hint:  { zh: '點擊三次離開',    en: 'Tap 3× to exit',   ko: '3번 탭하면 종료',       ja: '3回タップで終了' }
+            edit:  { zh: '← 修改',          en: '← Edit',           ko: '← 수정',               ja: '← 編集' },
+            hint:  { zh: '收銀員點擊三下關閉', en: 'Cashier: tap 3× to close', ko: '직원: 3번 탭하면 닫힘', ja: '店員: 3回タップで閉じる' }
         };
 
         function getLang() { return localStorage.getItem('lang') || 'zh'; }
@@ -445,6 +446,7 @@
         overlay.innerHTML =
             '<div class="cashier-inner">' +
               '<div class="cashier-header">' +
+                '<button class="cashier-edit-btn"></button>' +
                 '<span class="cashier-title">無名早餐店 點餐單</span>' +
               '</div>' +
               '<div class="cashier-items"></div>' +
@@ -466,7 +468,15 @@
             if (wakeLock) { wakeLock.release(); wakeLock = null; }
         }
 
-        // Triple-tap to exit cashier mode
+        // Edit button — returns customer to menu
+        overlay.querySelector('.cashier-edit-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            tapCount = 0;
+            overlay.classList.add('hidden');
+            releaseWakeLock();
+        });
+
+        // Triple-tap to exit cashier mode (for cashier)
         var tapCount = 0, tapTimer = null;
         overlay.addEventListener('click', function() {
             tapCount++;
@@ -522,6 +532,7 @@
             overlay.querySelector('.cashier-title').textContent = '無名早餐店 ' + t('title');
             overlay.querySelector('.cashier-total').textContent =
                 t('total') + ': ' + total.toFixed(0) + ' NT$';
+            overlay.querySelector('.cashier-edit-btn').textContent = t('edit');
             overlay.querySelector('.cashier-hint').textContent = t('hint');
             tapCount = 0;
             overlay.classList.remove('hidden');
