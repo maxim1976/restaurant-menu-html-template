@@ -375,7 +375,137 @@
                 btns.forEach(function(b) { b.classList.remove('active'); });
                 this.classList.add('active');
                 localStorage.setItem('lang', lang);
+                refreshCartLabels();
             });
+        });
+
+        // ── Order System ──────────────────────────────────────────────
+
+        var i18n = {
+            show:  { zh: '出示給收銀員 →', en: 'Show to Cashier →', ko: '카운터에 보여주세요 →', ja: 'レジに見せてください →' },
+            clear: { zh: '清除訂單',        en: 'Clear',             ko: '주문 삭제',             ja: 'クリア' },
+            items: { zh: '項',              en: 'items',             ko: '개',                    ja: '品' },
+            title: { zh: '點餐單',          en: 'Order',             ko: '주문서',                ja: 'ご注文' },
+            total: { zh: '合計',            en: 'Total',             ko: '합계',                  ja: '合計' }
+        };
+
+        function getLang() { return localStorage.getItem('lang') || 'zh'; }
+        function t(key) { var l = getLang(); return i18n[key][l] || i18n[key]['zh']; }
+
+        var cart = [];
+
+        // Inject qty controls into every plate
+        document.querySelectorAll('main .plate').forEach(function(plate, idx) {
+            var zhSpan = plate.querySelector('.zh');
+            var priceP = plate.querySelector('p:last-child');
+            var zhName = zhSpan ? zhSpan.textContent.trim() : '';
+            var price  = priceP ? parseFloat(priceP.textContent) : 0;
+
+            cart.push({ zh: zhName, price: price, qty: 0 });
+
+            var ctrl = document.createElement('div');
+            ctrl.className = 'qty-ctrl';
+            ctrl.innerHTML =
+                '<button class="qty-btn qty-minus" aria-label="remove one">−</button>' +
+                '<span class="qty-count">0</span>' +
+                '<button class="qty-btn qty-plus" aria-label="add one">+</button>';
+
+            plate.insertBefore(ctrl, priceP);
+
+            ctrl.querySelector('.qty-minus').addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (cart[idx].qty > 0) {
+                    cart[idx].qty--;
+                    ctrl.querySelector('.qty-count').textContent = cart[idx].qty;
+                    updateCartBar();
+                }
+            });
+
+            ctrl.querySelector('.qty-plus').addEventListener('click', function(e) {
+                e.stopPropagation();
+                cart[idx].qty++;
+                ctrl.querySelector('.qty-count').textContent = cart[idx].qty;
+                updateCartBar();
+            });
+        });
+
+        // Cart bar
+        var cartBar = document.createElement('div');
+        cartBar.className = 'cart-bar hidden';
+        cartBar.innerHTML =
+            '<span class="cart-summary"></span>' +
+            '<button class="cart-clear-btn"></button>' +
+            '<button class="cart-show-btn"></button>';
+        document.body.appendChild(cartBar);
+
+        // Cashier overlay
+        var overlay = document.createElement('div');
+        overlay.className = 'cashier-overlay hidden';
+        overlay.innerHTML =
+            '<div class="cashier-inner">' +
+              '<div class="cashier-header">' +
+                '<span class="cashier-title">無名早餐店 點餐單</span>' +
+                '<button class="cashier-close">✕</button>' +
+              '</div>' +
+              '<div class="cashier-items"></div>' +
+              '<div class="cashier-total"></div>' +
+            '</div>';
+        document.body.appendChild(overlay);
+
+        overlay.querySelector('.cashier-close').addEventListener('click', function() {
+            overlay.classList.add('hidden');
+        });
+
+        function updateCartBar() {
+            var total = 0, count = 0;
+            cart.forEach(function(item) {
+                if (item.qty > 0) { total += item.qty * item.price; count += item.qty; }
+            });
+            if (count === 0) {
+                cartBar.classList.add('hidden');
+                document.body.classList.remove('cart-visible');
+            } else {
+                cartBar.classList.remove('hidden');
+                document.body.classList.add('cart-visible');
+                cartBar.querySelector('.cart-summary').textContent =
+                    count + ' ' + t('items') + ' · NT$' + total.toFixed(0);
+                refreshCartLabels();
+            }
+        }
+
+        function refreshCartLabels() {
+            cartBar.querySelector('.cart-show-btn').textContent  = t('show');
+            cartBar.querySelector('.cart-clear-btn').textContent = t('clear');
+        }
+
+        cartBar.querySelector('.cart-show-btn').addEventListener('click', function() {
+            var lang = getLang();
+            var itemsEl = overlay.querySelector('.cashier-items');
+            itemsEl.innerHTML = '';
+            var total = 0;
+            cart.forEach(function(item) {
+                if (item.qty > 0) {
+                    var subtotal = item.qty * item.price;
+                    total += subtotal;
+                    var row = document.createElement('div');
+                    row.className = 'cashier-row';
+                    row.innerHTML =
+                        '<span class="cashier-name">' + item.zh + '</span>' +
+                        '<span class="cashier-qty">× ' + item.qty + '</span>' +
+                        '<span class="cashier-price">NT$' + subtotal.toFixed(0) + '</span>';
+                    itemsEl.appendChild(row);
+                }
+            });
+            overlay.querySelector('.cashier-title').textContent = '無名早餐店 ' + t('title');
+            overlay.querySelector('.cashier-total').textContent =
+                t('total') + ': NT$' + total.toFixed(0);
+            overlay.classList.remove('hidden');
+        });
+
+        cartBar.querySelector('.cart-clear-btn').addEventListener('click', function() {
+            cart.forEach(function(item) { item.qty = 0; });
+            document.querySelectorAll('.qty-count').forEach(function(el) { el.textContent = '0'; });
+            updateCartBar();
         });
     });
     </script>
