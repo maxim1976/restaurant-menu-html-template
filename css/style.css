@@ -556,90 +556,97 @@ body.cart-visible main {
     padding-bottom: 80px;
 }
 
-/* Cashier overlay */
+/* Cashier overlay — fullscreen kiosk mode */
 .cashier-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.88);
+    background: #000;
     z-index: 2000;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 48px 32px 80px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .cashier-overlay.hidden { display: none; }
 
 .cashier-inner {
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px 28px 24px;
-    max-width: 460px;
     width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    max-width: 600px;
 }
 
 .cashier-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 14px;
+    margin-bottom: 32px;
+    padding-bottom: 18px;
     border-bottom: 2px solid #d4af37;
+    text-align: center;
 }
 
 .cashier-header span {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: #d4af37;
 }
 
-.cashier-close {
-    background: none;
-    border: none;
-    font-size: 1.3rem;
-    cursor: pointer;
-    color: #888;
-    line-height: 1;
-    padding: 4px 8px;
-}
+/* Close button hidden — triple-tap exits instead */
+.cashier-close { display: none; }
 
 .cashier-row {
     display: flex;
-    align-items: center;
-    padding: 11px 0;
-    border-bottom: 1px solid #f0f0f0;
-    gap: 10px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid #222;
+    gap: 16px;
 }
 
 .cashier-name {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.35rem;
+    font-size: 2rem;
+    color: #fff;
     flex: 1;
     line-height: 1.3;
 }
 
 .cashier-qty {
     color: #888;
-    font-size: 1rem;
+    font-size: 2rem;
     flex-shrink: 0;
 }
 
 .cashier-price {
     font-weight: 700;
-    font-size: 1rem;
-    min-width: 68px;
+    font-size: 2rem;
+    color: #fff;
+    min-width: 100px;
     text-align: right;
     flex-shrink: 0;
 }
 
 .cashier-total {
-    margin-top: 18px;
-    font-size: 1.4rem;
+    margin-top: 28px;
+    font-size: 3rem;
     font-weight: 700;
     text-align: right;
+    color: #d4af37;
     font-family: 'Ma Shan Zheng', cursive;
-    padding-top: 10px;
+    padding-top: 18px;
     border-top: 2px solid #d4af37;
+}
+
+/* Exit hint fixed at bottom */
+.cashier-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #333;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
 }

@@ -386,7 +386,8 @@
             clear: { zh: '清除訂單',        en: 'Clear',             ko: '주문 삭제',             ja: 'クリア' },
             items: { zh: '項',              en: 'items',             ko: '개',                    ja: '品' },
             title: { zh: '點餐單',          en: 'Order',             ko: '주문서',                ja: 'ご注文' },
-            total: { zh: '合計',            en: 'Total',             ko: '합계',                  ja: '合計' }
+            total: { zh: '合計',            en: 'Total',             ko: '합계',                  ja: '合計' },
+            hint:  { zh: '點擊三次離開',    en: 'Tap 3× to exit',   ko: '3번 탭하면 종료',       ja: '3回タップで終了' }
         };
 
         function getLang() { return localStorage.getItem('lang') || 'zh'; }
@@ -445,15 +446,38 @@
             '<div class="cashier-inner">' +
               '<div class="cashier-header">' +
                 '<span class="cashier-title">無名早餐店 點餐單</span>' +
-                '<button class="cashier-close">✕</button>' +
               '</div>' +
               '<div class="cashier-items"></div>' +
               '<div class="cashier-total"></div>' +
-            '</div>';
+            '</div>' +
+            '<div class="cashier-hint"></div>';
         document.body.appendChild(overlay);
 
-        overlay.querySelector('.cashier-close').addEventListener('click', function() {
-            overlay.classList.add('hidden');
+        // Wake Lock
+        var wakeLock = null;
+        function requestWakeLock() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen').then(function(lock) {
+                    wakeLock = lock;
+                }).catch(function() {});
+            }
+        }
+        function releaseWakeLock() {
+            if (wakeLock) { wakeLock.release(); wakeLock = null; }
+        }
+
+        // Triple-tap to exit cashier mode
+        var tapCount = 0, tapTimer = null;
+        overlay.addEventListener('click', function() {
+            tapCount++;
+            if (tapTimer) clearTimeout(tapTimer);
+            if (tapCount >= 3) {
+                tapCount = 0;
+                overlay.classList.add('hidden');
+                releaseWakeLock();
+            } else {
+                tapTimer = setTimeout(function() { tapCount = 0; }, 700);
+            }
         });
 
         function updateCartBar() {
@@ -479,7 +503,6 @@
         }
 
         cartBar.querySelector('.cart-show-btn').addEventListener('click', function() {
-            var lang = getLang();
             var itemsEl = overlay.querySelector('.cashier-items');
             itemsEl.innerHTML = '';
             var total = 0;
@@ -498,8 +521,11 @@
             });
             overlay.querySelector('.cashier-title').textContent = '無名早餐店 ' + t('title');
             overlay.querySelector('.cashier-total').textContent =
-                t('total') + ': NT$' + total.toFixed(0);
+                t('total') + ': ' + total.toFixed(0) + ' NT$';
+            overlay.querySelector('.cashier-hint').textContent = t('hint');
+            tapCount = 0;
             overlay.classList.remove('hidden');
+            requestWakeLock();
         });
 
         cartBar.querySelector('.cart-clear-btn').addEventListener('click', function() {
