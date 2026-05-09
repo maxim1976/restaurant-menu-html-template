@@ -657,6 +657,24 @@ body.cart-visible main {
     border-top: 2px solid #d4af37;
 }
 
+/* Tourist ordering hint — visible only in Chinese (local) mode */
+.tourist-hint {
+    display: none;
+    background: #fff8e1;
+    border: 1px solid #d4af37;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    color: #7a6000;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+.lang-zh .tourist-hint { display: block; }
+
+/* Hide ordering UI in Chinese (local) mode */
+.lang-zh .qty-ctrl     { display: none; }
+.lang-zh .cart-bar     { display: none !important; }
+
 /* Hint at bottom of card */
 .cashier-hint {
     margin-top: 16px;
