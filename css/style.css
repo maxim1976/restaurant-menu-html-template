@@ -137,6 +137,27 @@ header .contacts a:hover {
     text-decoration: underline;
 }
 
+.line-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-note, .contact-note {
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    margin-top: 2px;
+}
+
+.contact-note {
+    display: inline;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.6);
+    margin-left: 4px;
+}
+
 /* Chinese font for menu */
 main .zh {
     font-family: 'Ma Shan Zheng', cursive;
