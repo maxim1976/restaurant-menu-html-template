@@ -231,6 +231,14 @@ main .img {
     border-radius: 2%;
 }
 
+main .img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
 main .left {
     order: -1;
     margin-left: 0;
@@ -294,9 +302,19 @@ main .left {
     }
 
     main .img {
-        display: none;
+        width: 100%;
+        height: auto;
+        margin-left: 0;
     }
-    
+
+    main .img img {
+        height: auto;
+    }
+
+    main .left {
+        margin-right: 0;
+    }
+
     main .text {
         width: 100%;
     }
@@ -418,7 +436,7 @@ main h2 {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 4s linear infinite;
+    animation: shimmer 4s linear 3 forwards;
 }
 
 /* Sidebar content stagger */
